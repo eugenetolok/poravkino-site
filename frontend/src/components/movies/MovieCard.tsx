@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 
@@ -29,10 +30,19 @@ const toDate = (value: string) => new Date(value);
 const getPerformanceId = (performance: Performance): number =>
   performance.id || performance.performance_id || 0;
 
-const hallLabel = (performance: Performance): string => {
-  if (!performance.hall_name) return "Зал";
+const PRICE_FORMATTER = new Intl.NumberFormat("ru-RU");
 
-  return `Зал ${performance.hall_name}`;
+const formatPrice = (price: number, compact?: boolean): string =>
+  compact
+    ? `${PRICE_FORMATTER.format(price)}₽`
+    : `${PRICE_FORMATTER.format(price)}\u00A0₽`;
+
+const hallLabel = (performance: Performance): string => {
+  const rawHallName = (performance.hall_name || "").replace(/\s+/g, " ").trim();
+
+  if (!rawHallName) return "Зал не указан";
+  if (/^\d+$/.test(rawHallName)) return `Зал ${rawHallName}`;
+  return rawHallName;
 };
 
 const SessionButton = ({
@@ -43,29 +53,65 @@ const SessionButton = ({
   compact?: boolean;
 }) => {
   const performanceId = getPerformanceId(performance);
+  const timeLabel = format(toDate(performance.time), "HH:mm");
+  const hall = hallLabel(performance);
+  const priceLabel = formatPrice(performance.price, compact);
+  const needsHallTicker = hall.length > (compact ? 10 : 16);
+  const hallTickerStyle = needsHallTicker
+    ? ({
+      "--hall-marquee-duration": `${Math.max(7, hall.length * 0.45)}s`,
+    } as CSSProperties)
+    : undefined;
 
   if (!performanceId) return null;
 
   return (
     <Link
-      className={`group rounded-xl border border-black/10 bg-black/[0.03] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] dark:border-white/10 dark:bg-white/[0.04] ${
-        compact ? "min-h-[56px] px-2 py-1.5" : "min-h-[62px] px-2.5 py-2"
-      }`}
+      aria-label={`Сеанс ${timeLabel}, ${hall}, ${priceLabel}`}
+      className={`group/session relative flex min-w-0 flex-col rounded-lg transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[#ff934f]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff8a3d]/70 dark:border-white/10 ${compact ? "min-h-[54px] gap-0.5 p-1" : "min-h-[60px] gap-0.5 p-1.5"
+        }`}
+      title={`${timeLabel} · ${hall} · ${priceLabel}`}
       to={`/performance/${performanceId}`}
     >
-      <span
-        className={`type-numeric block font-black leading-none ${compact ? "text-[15px]" : "text-base"}`}
+      <div
+        className={`relative z-10 flex flex-col items-center justify-center overflow-hidden rounded-[8px] border border-black/10 bg-white/92 text-center transition-all duration-300 group-hover/session:border-white/20 group-hover/session:bg-gradient-to-br group-hover/session:from-[#ff4f1f] group-hover/session:via-[#ff7a2f] group-hover/session:to-[#f0a640] group-hover/session:shadow-[0_10px_24px_-12px_rgba(255,94,46,0.72)] group-hover/session:animate-gradient-rich motion-reduce:group-hover/session:animate-none dark:border-white/10 dark:bg-white/[0.09] ${compact ? "h-[34px] px-1.5 py-0.5" : "h-[40px] px-2 py-1"
+          }`}
       >
-        {format(toDate(performance.time), "HH:mm")}
-      </span>
-      <span className="type-meta mt-0.5 block truncate text-[9px] tracking-[0.08em] text-[var(--text-muted)]">
-        {hallLabel(performance)}
-      </span>
-      <span
-        className={`type-numeric mt-0.5 block font-bold text-[var(--accent-strong)] ${compact ? "text-[11px]" : "text-[13px]"}`}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#ff4f1f] via-[#ff7a2f] to-[#f0a640] opacity-80 transition-opacity duration-300 group-hover/session:opacity-100"
+        />
+        <span
+          className={`type-numeric relative z-10 font-black leading-none tracking-[0.014em] text-[#0f172a] transition-colors duration-300 group-hover/session:text-white dark:text-white ${compact ? "text-[11px]" : "text-[13px]"
+            }`}
+        >
+          {timeLabel}
+        </span>
+        <span
+          className={`type-numeric relative z-10 mt-0.5 whitespace-nowrap font-bold leading-none text-[var(--accent-strong)] transition-colors duration-300 group-hover/session:text-white ${compact ? "text-[8px]" : "text-[9px]"
+            }`}
+        >
+          {priceLabel}
+        </span>
+      </div>
+
+      <div
+        className={`relative z-10 overflow-hidden px-0.5 text-center leading-[1.1] text-[var(--text-muted)] transition-colors duration-300 group-hover/session:text-[var(--text-primary)] dark:group-hover/session:text-white/85 ${compact ? "text-[8px]" : "text-[9px]"
+          }`}
+        style={hallTickerStyle}
+        title={hall}
       >
-        {performance.price} ₽
-      </span>
+        {needsHallTicker ? (
+          <span className="hall-marquee">
+            <span className="hall-marquee-track">
+              <span>{hall}</span>
+              <span aria-hidden>{hall}</span>
+            </span>
+          </span>
+        ) : (
+          <span className="block truncate">{hall}</span>
+        )}
+      </div>
     </Link>
   );
 };
@@ -119,7 +165,7 @@ export const MovieCard = ({ movie, viewMode = "grid" }: MovieCardProps) => {
               На выбранную дату сеансов нет
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-1.5">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(96px,1fr))] gap-1.5">
               {sortedPerformances.map((performance) => (
                 <SessionButton
                   key={getPerformanceId(performance) || performance.time}
@@ -182,7 +228,7 @@ export const MovieCard = ({ movie, viewMode = "grid" }: MovieCardProps) => {
           Нет доступных сеансов на выбранную дату
         </div>
       ) : (
-        <div className="mt-3 grid grid-cols-3 gap-1.5 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="mt-3 grid grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-1.5">
           {sortedPerformances.map((performance) => (
             <SessionButton
               key={getPerformanceId(performance) || performance.time}

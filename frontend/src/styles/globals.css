@@ -192,6 +192,32 @@ body {
         mask-image: linear-gradient(to right, black 86%, transparent 100%);
     }
 
+    .hall-marquee {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+
+    .hall-marquee-track {
+        display: inline-flex;
+        min-width: max-content;
+        gap: 1.5rem;
+        animation: hall-marquee var(--hall-marquee-duration, 8s) linear infinite;
+        will-change: transform;
+    }
+
+    @keyframes hall-marquee {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(calc(-50% - 0.75rem));
+        }
+    }
+
     .pb-safe {
         padding-bottom: env(safe-area-inset-bottom);
     }
