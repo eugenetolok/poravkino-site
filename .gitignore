@@ -1,0 +1,73 @@
+# --- OS ---
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# --- Editors / IDE ---
+**/.idea/
+**/.vscode/*
+!**/.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- Logs ---
+**/logs/
+**/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Environment / local overrides ---
+**/.env
+**/.env.*
+**/*.local
+
+# --- Frontend (Vite / Node) ---
+**/node_modules/
+**/dist/
+**/dist-ssr/
+**/build/
+**/.next/
+**/.turbo/
+**/.cache/
+**/coverage/
+**/*.tsbuildinfo
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+bun.lockb
+*project_context.txt
+
+# --- Python caches (backend scripts) ---
+**/__pycache__/
+**/.pytest_cache/
+**/*.py[cod]
+
+# --- Backend local runtime files ---
+backend/bin/
+backend/dist/
+backend/trash/
+backend/scripts/reports/
+backend/scripts/.env
+backend/app.db
+backend/*.out
+backend/*.test
+backend/go-poravkino
+backend/go-poravkino.exe
+
+# --- Backend local config / secrets ---
+backend/cinema.yaml
+backend/env.yaml
+backend/env2.yaml
+backend/extapi.yaml
+backend/sber.yaml
+backend/covid.yaml
+backend/pushkin.yaml
+
+# --- Misc workspace files ---
+*.code-workspace

@@ -1,0 +1,85 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build-go-binary:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.19.4'
+
+      - name: Run a multi-line script
+        run: |
+          go mod download
+          mkdir -p bin
+          CGO_ENABLED=0 GOOS=linux go build -o bin -a -installsuffix cgo ./...
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: poravkino
+          path: ./
+
+  build-and-push-docker-image:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: build-go-binary
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # setup Docker buld action
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - uses: actions/download-artifact@master
+        with:
+          name: poravkino
+          path: /tmp/poravkino
+
+      - name: Run a multi-line script
+        run: |
+          cd /tmp/poravkino/
+          ls -lha
+          chmod +x bin/poravkino
+          URL=$(curl -H "Authorization: token ${{ secrets.GTHB_KEY }}" https://api.github.com/repos/eugenetolok/go-poravkino-frontend/releases/tags/master | jq -r '.assets[0].url')
+          curl -H "Authorization: Bearer ${{ secrets.GTHB_KEY }}" $URL -o dist.tar -H 'Accept:application/octet-stream' -L
+          tar -xf dist.tar 
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: /tmp/poravkino
+          # Note: tags has to be all lower-case
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/poravkino:latest 
+          # build on feature branches, push only on main branch
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}

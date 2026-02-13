@@ -1,0 +1,67 @@
+/* Dark theme styles for react-datepicker */
+.react-datepicker {
+    background-color: #333 !important;
+    color: white;
+}
+
+.react-datepicker__header {
+    background-color: #222 !important;
+}
+
+.react-datepicker-time__header {
+    color: white !important;
+}
+
+.react-datepicker__time-list-item {
+    background-color: #222 !important;
+    color: white !important;
+}
+
+.react-datepicker__time-list-item--selected {
+    background-color: white !important;
+    color: black !important;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+    color: white !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range {
+    background-color: #555 !important;
+    color: white !important;
+}
+
+.react-datepicker__current-month {
+    color: white !important;
+}
+
+/* Add more overrides as needed */
+
+/* Hover effect on days */
+.react-datepicker__day:hover,
+.react-datepicker__day--in-range:hover,
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--keyboard-selected:hover {
+    background-color: #555 !important;
+    color: #fff !important;
+    /* Black text on hover */
+}
+
+/* Selected and range styles with black text */
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range {
+    background-color: #555 !important;
+    color: #fff !important;
+    /* Ensure text is black for better readability */
+}
+
+/* Current day text color */
+.react-datepicker__day--today {
+    color: #fff !important;
+    /* Black text for the current day */
+}

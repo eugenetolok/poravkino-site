@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Успешная покупка</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            background-color: #ffffff;
+            color: #11181C;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.875rem;
+            color: #687076;
+        }
+
+        h1 {
+            color: #11181C;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+        }
+
+        .ticket-info {
+            background-color: #F4F4F5;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .ticket-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 20px;
+        }
+
+        .ticket-table th,
+        .ticket-table td {
+            border: 1px solid #EAEAEA;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .ticket-table th {
+            background-color: #F4F4F5;
+            font-weight: 600;
+            color: #687076;
+        }
+
+        .ticket-table tr:first-child th:first-child {
+            border-top-left-radius: 14px;
+        }
+
+        .ticket-table tr:first-child th:last-child {
+            border-top-right-radius: 14px;
+        }
+
+        .ticket-table tr:last-child td:first-child {
+            border-bottom-left-radius: 14px;
+        }
+
+        .ticket-table tr:last-child td:last-child {
+            border-bottom-right-radius: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #006FEE;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .chip {
+            display: inline-block;
+            padding: 4px 12px;
+            background-color: #006FEE;
+            color: #ffffff;
+            border-radius: 14px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Успешная покупка</h1>
+        </div>
+        <div class="content">
+            <p>Вы успешно оплатили билеты на сайте нашего кинотеатра. Проходите с данным кодом на сеанс.</p>
+
+            <div class="qr-code">
+                <img src="https://APP_DOMAIN/api/qr?secret={{ .Secret }}" alt="QR код">
+            </div>
+
+            <p>Код: <span class="chip">{{ .ExternalID }}-{{ .Secret }}</span></p>
+
+            <div class="ticket-info">
+                <p>
+                    <strong>Фильм:</strong> {{ .Performance.Movie.NameSecondary }}<br>
+                    <strong>Зал:</strong> {{ .Performance.HallName }}<br>
+                    <strong>Время:</strong> {{ .Performance.Time.Format "02.01.2006 15:04" }}
+                </p>
+            </div>
+
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Ряд</th>
+                        <th>Место</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .Tickets }}
+                    <tr>
+                        <td>{{ .Row }}</td>
+                        <td>{{ .Seat }}</td>
+                        <td>{{ .Price }} руб.</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+
+            <p style="text-align: center;">
+                <a href="https://APP_DOMAIN/api/sales/code/lost?secret={{ .Secret }}" class="btn">Билеты с QR</a>
+            </p>
+
+            <p>Приятного просмотра!</p>
+        </div>
+        <div class="footer">
+            <p>
+                Email присылаются только в случае покупки билетов<br>
+                Вы не подписаны ни на какие рассылки от нас<br>
+                Письмо сформировано автоматически. Для обращений используйте контакты, указанные на сайте.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
