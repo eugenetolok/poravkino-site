@@ -17,7 +17,13 @@ interface CinemaInfo {
   logo?: string;
 }
 
-const MAIN_NAV = [{ name: "Афиша", path: "/" }];
+const MAIN_NAV = [
+  { name: "Афиша", path: "/" },
+  { name: "Скоро в кино", path: "/soon" },
+  { name: "Вопросы и ответы", path: "/faq" },
+  { name: "Мои билеты", path: "/my-tickets" },
+  { name: "Контакты", path: "/contacts" },
+];
 
 export const Navbar = () => {
   const location = useLocation();
@@ -46,7 +52,13 @@ export const Navbar = () => {
     if (location.pathname.startsWith("/performance/")) return "Выбор мест";
     if (location.pathname.startsWith("/movie/")) return "Фильм";
 
-    return "Афиша";
+    const matchedNavItem = MAIN_NAV.find((item) =>
+      item.path === "/"
+        ? location.pathname === "/"
+        : location.pathname.startsWith(item.path),
+    );
+
+    return matchedNavItem?.name || "Афиша";
   }, [location.pathname]);
 
   return (
@@ -84,14 +96,17 @@ export const Navbar = () => {
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent className="hidden md:flex" justify="center">
+        <NavbarContent className="hidden xl:flex" justify="center">
           {MAIN_NAV.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive =
+              item.path === "/"
+                ? location.pathname === "/"
+                : location.pathname.startsWith(item.path);
 
             return (
               <NavbarItem key={item.path} isActive={isActive}>
                 <Link
-                  className={`type-label rounded-full px-4 py-2 uppercase tracking-[0.1em] transition-colors ${
+                  className={`type-label rounded-full px-3 py-2 transition-colors xl:px-4 ${
                     isActive
                       ? "bg-[var(--accent)] text-white"
                       : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
@@ -106,15 +121,15 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent className="gap-3" justify="end">
-          <NavbarItem className="hidden md:flex">
+          <NavbarItem className="hidden xl:flex">
             <span className="type-meta rounded-full border border-black/10 bg-white/50 px-3 py-1 text-[10px] tracking-[0.11em] text-[var(--text-muted)] dark:border-white/15 dark:bg-white/5">
               {currentSection}
             </span>
           </NavbarItem>
-          <NavbarItem className="hidden md:flex">
+          <NavbarItem className="hidden xl:flex">
             <ThemeSwitch />
           </NavbarItem>
-          <NavbarItem className="md:hidden">
+          <NavbarItem className="xl:hidden">
             <NavbarMenuToggle
               aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
             />
@@ -122,15 +137,17 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarMenu className="bg-[var(--surface-0)]/95 px-2 pt-20 backdrop-blur-xl dark:bg-[var(--surface-0)]/95">
-          <NavbarMenuItem>
-            <Link
-              className="type-display text-3xl text-[var(--text-primary)]"
-              to="/"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Афиша
-            </Link>
-          </NavbarMenuItem>
+          {MAIN_NAV.map((item) => (
+            <NavbarMenuItem key={item.path}>
+              <Link
+                className="type-display text-2xl text-[var(--text-primary)] md:text-3xl"
+                to={item.path}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            </NavbarMenuItem>
+          ))}
           <NavbarMenuItem>
             <div className="mt-3 flex items-center justify-between rounded-2xl border border-black/10 bg-white/60 px-3 py-2 dark:border-white/10 dark:bg-white/5">
               <span className="type-label uppercase tracking-[0.08em] text-[var(--text-muted)]">
