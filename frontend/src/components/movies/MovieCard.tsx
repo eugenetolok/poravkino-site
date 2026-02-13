@@ -68,36 +68,41 @@ const SessionButton = ({
   return (
     <Link
       aria-label={`Сеанс ${timeLabel}, ${hall}, ${priceLabel}`}
-      className={`group/session relative flex min-w-0 flex-col rounded-lg transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[#ff934f]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff8a3d]/70 dark:border-white/10 ${compact ? "min-h-[54px] gap-0.5 p-1" : "min-h-[60px] gap-0.5 p-1.5"
-        }`}
+      className={`cinema-card-soft group/session relative flex min-w-0 flex-col rounded-lg transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)]/45 hover:shadow-[0_14px_26px_-20px_rgba(255,110,66,0.68)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/55 ${
+        compact ? "min-h-[54px] gap-0.5 p-1" : "min-h-[60px] gap-0.5 p-1.5"
+      }`}
       title={`${timeLabel} · ${hall} · ${priceLabel}`}
       to={`/performance/${performanceId}`}
     >
       <div
-        className={`relative z-10 flex flex-col items-center justify-center overflow-hidden rounded-[8px] border border-black/10 bg-white/92 text-center transition-all duration-300 group-hover/session:border-white/20 group-hover/session:bg-gradient-to-br group-hover/session:from-[#ff4f1f] group-hover/session:via-[#ff7a2f] group-hover/session:to-[#f0a640] group-hover/session:shadow-[0_10px_24px_-12px_rgba(255,94,46,0.72)] group-hover/session:animate-gradient-rich motion-reduce:group-hover/session:animate-none dark:border-white/10 dark:bg-white/[0.09] ${compact ? "h-[34px] px-1.5 py-0.5" : "h-[40px] px-2 py-1"
-          }`}
+        className={`relative z-10 flex flex-col items-center justify-center overflow-hidden rounded-[8px] border border-black/15 bg-white/55 text-center transition-[border-color,background-color,box-shadow] duration-300 group-hover/session:border-[var(--accent)]/35 group-hover/session:bg-[var(--accent-soft)] group-hover/session:shadow-[0_10px_18px_-16px_rgba(255,110,66,0.65)] dark:border-white/15 dark:bg-white/[0.08] dark:group-hover/session:bg-[rgba(255,110,66,0.16)] ${
+          compact ? "h-[34px] px-1.5 py-0.5" : "h-[40px] px-2 py-1"
+        }`}
       >
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#ff4f1f] via-[#ff7a2f] to-[#f0a640] opacity-80 transition-opacity duration-300 group-hover/session:opacity-100"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#ff4f1f] via-[#ff7a2f] to-[#f0a640] opacity-75 transition-opacity duration-300 group-hover/session:opacity-100"
         />
         <span
-          className={`type-numeric relative z-10 font-black leading-none tracking-[0.014em] text-[#0f172a] transition-colors duration-300 group-hover/session:text-white dark:text-white ${compact ? "text-[11px]" : "text-[13px]"
-            }`}
+          className={`type-numeric relative z-10 font-black leading-none tracking-[0.014em] text-[var(--text-primary)] transition-colors duration-300 group-hover/session:text-[var(--accent-strong)] dark:text-white dark:group-hover/session:text-[#ffb499] ${
+            compact ? "text-[11px]" : "text-[13px]"
+          }`}
         >
           {timeLabel}
         </span>
         <span
-          className={`type-numeric relative z-10 mt-0.5 whitespace-nowrap font-bold leading-none text-[var(--accent-strong)] transition-colors duration-300 group-hover/session:text-white ${compact ? "text-[8px]" : "text-[9px]"
-            }`}
+          className={`type-numeric relative z-10 mt-0.5 whitespace-nowrap font-bold leading-none text-[var(--accent-strong)] transition-colors duration-300 group-hover/session:text-[var(--accent-strong)] dark:group-hover/session:text-[#ffb499] ${
+            compact ? "text-[8px]" : "text-[9px]"
+          }`}
         >
           {priceLabel}
         </span>
       </div>
 
       <div
-        className={`relative z-10 overflow-hidden px-0.5 text-center leading-[1.1] text-[var(--text-muted)] transition-colors duration-300 group-hover/session:text-[var(--text-primary)] dark:group-hover/session:text-white/85 ${compact ? "text-[8px]" : "text-[9px]"
-          }`}
+        className={`relative z-10 overflow-hidden px-0.5 text-center leading-[1.1] text-[var(--text-muted)] transition-colors duration-300 group-hover/session:text-[var(--text-primary)] dark:text-white/75 dark:group-hover/session:text-white ${
+          compact ? "text-[8px]" : "text-[9px]"
+        }`}
         style={hallTickerStyle}
         title={hall}
       >
@@ -124,9 +129,9 @@ export const MovieCard = ({ movie, viewMode = "grid" }: MovieCardProps) => {
 
   if (viewMode === "grid") {
     return (
-      <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-black/10 bg-white/85 shadow-[0_16px_50px_-28px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent)]/30 hover:shadow-[0_28px_60px_-28px_rgba(226,57,0,0.45)] dark:border-white/10 dark:bg-[#121925]/85">
+      <article className="group cinema-card flex h-full flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent)]/40 hover:shadow-[0_26px_50px_-34px_rgba(255,110,66,0.65)]">
         <Link
-          className="relative block aspect-[3/4] overflow-hidden"
+          className="relative z-10 block aspect-[3/4] overflow-hidden"
           to={`/movie/${movie.id}`}
         >
           <img
@@ -154,14 +159,14 @@ export const MovieCard = ({ movie, viewMode = "grid" }: MovieCardProps) => {
           </div>
         </Link>
 
-        <div className="flex flex-1 flex-col gap-3 p-4">
+        <div className="relative z-10 flex flex-1 flex-col gap-3 p-4">
           <div className="type-meta flex items-center justify-between text-[11px] tracking-[0.06em] text-[var(--text-muted)]">
             <span>{movie.duration} мин</span>
             <span>{movie.country || "Страна не указана"}</span>
           </div>
 
           {sortedPerformances.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-black/10 px-3 py-4 text-center text-sm text-[var(--text-muted)] dark:border-white/15">
+            <div className="cinema-card-soft rounded-2xl border-dashed px-3 py-4 text-center text-sm text-[var(--text-muted)]">
               На выбранную дату сеансов нет
             </div>
           ) : (
@@ -181,10 +186,10 @@ export const MovieCard = ({ movie, viewMode = "grid" }: MovieCardProps) => {
   }
 
   return (
-    <article className="rounded-3xl border border-black/10 bg-white/90 p-3 shadow-[0_20px_60px_-32px_rgba(0,0,0,0.4)] dark:border-white/10 dark:bg-[#121925]/88 sm:p-4">
+    <article className="cinema-card p-3 sm:p-4">
       <div className="flex gap-3 sm:gap-4">
         <Link
-          className="group relative block w-[108px] shrink-0 overflow-hidden rounded-2xl sm:w-[124px]"
+          className="group relative z-10 block w-[108px] shrink-0 overflow-hidden rounded-2xl sm:w-[124px]"
           to={`/movie/${movie.id}`}
         >
           <div className="aspect-[2/3]">
@@ -198,15 +203,15 @@ export const MovieCard = ({ movie, viewMode = "grid" }: MovieCardProps) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         </Link>
 
-        <div className="min-w-0 flex-1">
+        <div className="relative z-10 min-w-0 flex-1">
           <div className="mb-2 flex flex-wrap items-center gap-1.5">
             <span className="type-meta rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--accent-strong)]">
               {getPrimaryGenre(movie.genres)}
             </span>
-            <span className="type-meta rounded-full border border-black/10 px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--text-muted)] dark:border-white/10">
+            <span className="type-meta rounded-full border border-black/15 bg-white/45 px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--text-muted)] dark:border-white/15 dark:bg-white/[0.08]">
               {movie.duration} мин
             </span>
-            <span className="type-meta rounded-full border border-black/10 px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--text-muted)] dark:border-white/10">
+            <span className="type-meta rounded-full border border-black/15 bg-white/45 px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--text-muted)] dark:border-white/15 dark:bg-white/[0.08]">
               {movie.age}+
             </span>
           </div>
@@ -224,11 +229,11 @@ export const MovieCard = ({ movie, viewMode = "grid" }: MovieCardProps) => {
       </div>
 
       {sortedPerformances.length === 0 ? (
-        <div className="mt-4 rounded-2xl border border-dashed border-black/10 px-3 py-4 text-sm text-[var(--text-muted)] dark:border-white/15">
+        <div className="cinema-card-soft relative z-10 mt-4 rounded-2xl border-dashed px-3 py-4 text-sm text-[var(--text-muted)]">
           Нет доступных сеансов на выбранную дату
         </div>
       ) : (
-        <div className="mt-3 grid grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-1.5">
+        <div className="relative z-10 mt-3 grid grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-1.5">
           {sortedPerformances.map((performance) => (
             <SessionButton
               key={getPerformanceId(performance) || performance.time}

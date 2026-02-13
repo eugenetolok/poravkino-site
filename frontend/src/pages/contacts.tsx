@@ -67,7 +67,7 @@ export default function ContactsPage() {
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-6 pb-12">
-        <section className="glass-panel rounded-3xl p-6 md:p-8">
+        <section className="cinema-card p-6 md:p-8">
           <p className="type-eyebrow text-[var(--text-muted)]">Связь</p>
           <h1 className="type-display mt-3 text-3xl md:text-4xl">Контакты</h1>
           <p className="type-body mt-3 max-w-3xl text-[var(--text-muted)]">
@@ -77,7 +77,7 @@ export default function ContactsPage() {
         </section>
 
         <section className="grid gap-4 md:grid-cols-2">
-          <article className="rounded-3xl border border-black/10 bg-white/80 p-5 dark:border-white/10 dark:bg-[#121925]/80">
+          <article className="cinema-card p-5">
             <p className="type-meta text-[11px] tracking-[0.11em] text-[var(--text-muted)]">
               Адрес
             </p>
@@ -87,7 +87,7 @@ export default function ContactsPage() {
             {contacts?.mapUrl && (
               <Button
                 as="a"
-                className="mt-4 border border-black/10 dark:border-white/15"
+                className="cinema-card-soft mt-4 text-[var(--text-primary)]"
                 href={normalizeUrl(contacts.mapUrl)}
                 rel="noreferrer"
                 target="_blank"
@@ -98,7 +98,7 @@ export default function ContactsPage() {
             )}
           </article>
 
-          <article className="rounded-3xl border border-black/10 bg-white/80 p-5 dark:border-white/10 dark:bg-[#121925]/80">
+          <article className="cinema-card p-5">
             <p className="type-meta text-[11px] tracking-[0.11em] text-[var(--text-muted)]">
               Поддержка
             </p>
@@ -123,7 +123,7 @@ export default function ContactsPage() {
             )}
           </article>
 
-          <article className="rounded-3xl border border-black/10 bg-white/80 p-5 dark:border-white/10 dark:bg-[#121925]/80">
+          <article className="cinema-card p-5">
             <p className="type-meta text-[11px] tracking-[0.11em] text-[var(--text-muted)]">
               Соцсети
             </p>
@@ -131,7 +131,7 @@ export default function ContactsPage() {
               {contacts?.vk && (
                 <Button
                   as="a"
-                  className="border border-black/10 dark:border-white/15"
+                  className="cinema-card-soft text-[var(--text-primary)]"
                   href={normalizeUrl(contacts.vk)}
                   rel="noreferrer"
                   target="_blank"
@@ -143,7 +143,7 @@ export default function ContactsPage() {
               {contacts?.telegram && (
                 <Button
                   as="a"
-                  className="border border-black/10 dark:border-white/15"
+                  className="cinema-card-soft text-[var(--text-primary)]"
                   href={normalizeUrl(contacts.telegram)}
                   rel="noreferrer"
                   target="_blank"
@@ -160,7 +160,7 @@ export default function ContactsPage() {
             </div>
           </article>
 
-          <article className="rounded-3xl border border-black/10 bg-white/80 p-5 dark:border-white/10 dark:bg-[#121925]/80">
+          <article className="cinema-card p-5">
             <p className="type-meta text-[11px] tracking-[0.11em] text-[var(--text-muted)]">
               Контактное лицо
             </p>

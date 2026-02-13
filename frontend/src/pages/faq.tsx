@@ -32,7 +32,7 @@ export default function FAQPage() {
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-6 pb-12">
-        <section className="glass-panel rounded-3xl p-6 md:p-8">
+        <section className="cinema-card p-6 md:p-8">
           <p className="type-eyebrow text-[var(--text-muted)]">Поддержка</p>
           <h1 className="type-display mt-3 text-3xl md:text-4xl">
             Вопросы и ответы
@@ -47,7 +47,7 @@ export default function FAQPage() {
           {FAQ_ITEMS.map((item) => (
             <details
               key={item.question}
-              className="group rounded-2xl border border-black/10 bg-white/80 p-4 dark:border-white/10 dark:bg-[#121925]/78"
+              className="cinema-card-soft group p-4 transition-colors duration-300"
             >
               <summary className="type-title cursor-pointer list-none pr-8 text-base marker:content-none sm:text-lg">
                 {item.question}

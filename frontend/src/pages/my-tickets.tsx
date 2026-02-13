@@ -92,7 +92,7 @@ export default function MyTicketsPage() {
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-6 pb-12">
-        <section className="glass-panel rounded-3xl p-6 md:p-8">
+        <section className="cinema-card p-6 md:p-8">
           <p className="type-eyebrow text-[var(--text-muted)]">Заказы</p>
           <h1 className="type-display mt-3 text-3xl md:text-4xl">Мои билеты</h1>
           <p className="type-body mt-3 max-w-3xl text-[var(--text-muted)]">
@@ -105,7 +105,7 @@ export default function MyTicketsPage() {
               className="max-w-xl"
               classNames={{
                 inputWrapper:
-                  "border border-black/10 bg-white/80 data-[hover=true]:border-black/20 group-data-[focus=true]:border-[var(--accent)] dark:border-white/10 dark:bg-white/[0.05]",
+                  "cinema-card-soft border border-black/10 bg-white/80 data-[hover=true]:border-black/20 group-data-[focus=true]:border-[var(--accent)] dark:border-white/10 dark:bg-white/[0.05]",
                 input: "text-[var(--text-primary)]",
               }}
               placeholder="Например: 5f2a8c..."
@@ -126,7 +126,7 @@ export default function MyTicketsPage() {
         </section>
 
         {sale && (
-          <section className="rounded-3xl border border-black/10 bg-white/85 p-5 dark:border-white/10 dark:bg-[#121925]/80 md:p-6">
+          <section className="cinema-card p-5 md:p-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <p className="type-meta text-[11px] tracking-[0.11em] text-[var(--text-muted)]">
@@ -143,7 +143,7 @@ export default function MyTicketsPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-black/10 bg-black/[0.02] p-4 dark:border-white/10 dark:bg-white/[0.03]">
+              <div className="cinema-card-soft p-4">
                 <p className="type-meta text-[11px] tracking-[0.11em] text-[var(--text-muted)]">
                   Заказ
                 </p>
@@ -170,7 +170,7 @@ export default function MyTicketsPage() {
                   sale.tickets.map((ticket) => (
                     <article
                       key={`${ticket.row}-${ticket.seat}-${ticket.external_code}`}
-                      className="rounded-2xl border border-black/10 bg-white/70 p-3 dark:border-white/10 dark:bg-white/[0.03]"
+                      className="cinema-card-soft p-3"
                     >
                       <p className="type-title text-base">
                         Ряд {ticket.row}, место {ticket.seat}
@@ -189,7 +189,7 @@ export default function MyTicketsPage() {
           </section>
         )}
 
-        <section className="rounded-3xl border border-dashed border-black/15 bg-white/50 p-5 dark:border-white/15 dark:bg-white/[0.02]">
+        <section className="cinema-card-soft border-dashed p-5">
           <p className="type-body text-[var(--text-muted)]">
             Нет кода заказа? Проверьте папку «Спам» в почте или обратитесь на
             страницу{" "}

@@ -43,7 +43,7 @@ export default function SoonPage() {
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-6 pb-12">
-        <section className="glass-panel rounded-3xl p-6 md:p-8">
+        <section className="cinema-card p-6 md:p-8">
           <p className="type-eyebrow text-[var(--text-muted)]">Анонсы</p>
           <h1 className="type-display mt-3 text-3xl md:text-4xl">
             Скоро в кино
@@ -58,7 +58,7 @@ export default function SoonPage() {
             </Button>
             <Button
               as="a"
-              className="border border-black/10 dark:border-white/15"
+              className="cinema-card-soft text-[var(--text-primary)]"
               href="/contacts"
               variant="flat"
             >
@@ -71,7 +71,7 @@ export default function SoonPage() {
           {UPCOMING_MOVIES.map((movie) => (
             <article
               key={movie.title}
-              className="rounded-3xl border border-black/10 bg-white/80 p-5 shadow-[0_20px_45px_-32px_rgba(0,0,0,0.45)] dark:border-white/10 dark:bg-[#121925]/80"
+              className="cinema-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_52px_-34px_rgba(255,105,58,0.62)]"
             >
               <p className="type-meta text-[11px] tracking-[0.11em] text-[var(--text-muted)]">
                 {movie.genre}

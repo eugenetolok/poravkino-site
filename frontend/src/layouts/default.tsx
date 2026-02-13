@@ -13,15 +13,15 @@ export default function DefaultLayout({
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
       >
-        <div className="absolute -left-28 -top-28 h-96 w-96 rounded-full bg-orange-400/20 blur-[120px] dark:bg-orange-500/15" />
-        <div className="absolute right-[-8%] top-24 h-[28rem] w-[28rem] rounded-full bg-amber-300/25 blur-[130px] dark:bg-amber-500/10" />
-        <div className="absolute bottom-[-12rem] left-[20%] h-[32rem] w-[32rem] rounded-full bg-cyan-300/20 blur-[150px] dark:bg-cyan-600/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_6%,rgba(255,150,106,0.38),transparent_34%),radial-gradient(circle_at_88%_12%,rgba(133,199,255,0.34),transparent_36%),radial-gradient(circle_at_52%_94%,rgba(132,232,214,0.28),transparent_42%)] dark:bg-[radial-gradient(circle_at_8%_6%,rgba(255,120,84,0.2),transparent_34%),radial-gradient(circle_at_88%_12%,rgba(95,140,255,0.2),transparent_38%),radial-gradient(circle_at_52%_94%,rgba(66,181,164,0.16),transparent_42%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0.2)_34%,rgba(255,164,120,0.18)_66%,rgba(120,190,255,0.24)_100%)] dark:bg-[linear-gradient(135deg,rgba(8,14,24,0.66)_0%,rgba(8,16,29,0.82)_38%,rgba(35,22,30,0.42)_68%,rgba(20,37,61,0.62)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(255,255,255,0.56),transparent_44%)] dark:bg-[radial-gradient(circle_at_50%_16%,rgba(255,255,255,0.08),transparent_44%)]" />
         <div
-          className="absolute inset-0 opacity-30 dark:opacity-20"
+          className="absolute inset-0 opacity-[0.14] dark:opacity-[0.08]"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(20,20,20,0.08) 1px, transparent 0)",
-            backgroundSize: "22px 22px",
+              "radial-gradient(circle at 1px 1px, rgba(31,49,77,0.16) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
           }}
         />
       </div>

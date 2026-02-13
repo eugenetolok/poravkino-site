@@ -108,8 +108,8 @@ export const Navbar = () => {
                 <Link
                   className={`type-label rounded-full px-3 py-2 transition-colors xl:px-4 ${
                     isActive
-                      ? "bg-[var(--accent)] text-white"
-                      : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                      ? "border border-[var(--accent)]/40 bg-[var(--accent-soft)] text-[var(--accent-strong)] shadow-[0_10px_22px_-18px_rgba(255,106,56,0.85)] dark:text-[#ffb499]"
+                      : "text-[var(--text-muted)] hover:bg-black/[0.05] hover:text-[var(--text-primary)] dark:hover:bg-white/[0.08]"
                   }`}
                   to={item.path}
                 >
@@ -122,7 +122,7 @@ export const Navbar = () => {
 
         <NavbarContent className="gap-3" justify="end">
           <NavbarItem className="hidden xl:flex">
-            <span className="type-meta rounded-full border border-black/10 bg-white/50 px-3 py-1 text-[10px] tracking-[0.11em] text-[var(--text-muted)] dark:border-white/15 dark:bg-white/5">
+            <span className="cinema-card-soft type-meta rounded-full px-3 py-1 text-[10px] tracking-[0.11em] text-[var(--text-muted)]">
               {currentSection}
             </span>
           </NavbarItem>
@@ -149,7 +149,7 @@ export const Navbar = () => {
             </NavbarMenuItem>
           ))}
           <NavbarMenuItem>
-            <div className="mt-3 flex items-center justify-between rounded-2xl border border-black/10 bg-white/60 px-3 py-2 dark:border-white/10 dark:bg-white/5">
+            <div className="cinema-card-soft mt-3 flex items-center justify-between rounded-2xl px-3 py-2">
               <span className="type-label uppercase tracking-[0.08em] text-[var(--text-muted)]">
                 Тема
               </span>

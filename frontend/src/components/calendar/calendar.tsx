@@ -177,12 +177,13 @@ export const Calendar = ({
   // --- СТИЛИ ---
 
   const containerClasses =
-    "flex w-full max-w-full items-center gap-2 overflow-hidden p-1.5 bg-[#18181b]/60 backdrop-blur-2xl border border-white/10 rounded-[24px] shadow-2xl ring-1 ring-white/5";
+    "flex w-full max-w-full items-center gap-2 overflow-hidden rounded-[24px] border border-[var(--glass-border-dark)] bg-[linear-gradient(145deg,var(--glass-bg-strong),var(--glass-bg))] p-1.5 text-[var(--text-primary)] shadow-[var(--glass-shadow)] ring-1 ring-[var(--glass-border)] backdrop-blur-2xl";
   const btnBase =
     "relative flex h-[72px] flex-col items-center justify-center overflow-hidden rounded-[16px] transition-all duration-300 sm:h-[80px] sm:rounded-[18px]";
   const controlsBtnBase =
     "relative flex h-[72px] w-[56px] min-w-[56px] flex-col items-center justify-center overflow-hidden rounded-[16px] transition-all duration-300 sm:h-[80px] sm:w-[64px] sm:min-w-[64px] sm:rounded-[18px]";
-  const btnInactive = "text-gray-400 hover:text-white hover:bg-white/10";
+  const btnInactive =
+    "text-[var(--text-muted)] hover:bg-[var(--glass-bg-soft)] hover:text-[var(--text-primary)]";
 
   const btnActive =
     "bg-gradient-to-br from-[#ff4f1f] via-[#ff7a2f] to-[#f0a640] animate-gradient-rich text-white shadow-[0_8px_20px_-6px_rgba(255,94,46,0.55)] ring-1 ring-white/20 scale-100";
@@ -210,19 +211,25 @@ export const Calendar = ({
                 )}
 
                 <span
-                  className={`type-meta z-10 mb-0.5 text-[9px] tracking-[0.1em] ${isActive ? "text-orange-50" : "text-gray-500"}`}
+                  className={`type-meta z-10 mb-0.5 text-[9px] tracking-[0.1em] ${
+                    isActive ? "text-orange-50" : "text-[var(--text-muted)]"
+                  }`}
                 >
                   {format(date, "MMM", { locale: ru }).replace(".", "")}
                 </span>
 
                 <span
-                  className={`type-numeric z-10 text-2xl font-bold leading-none drop-shadow-sm ${isActive ? "text-white" : "text-gray-200"}`}
+                  className={`type-numeric z-10 text-2xl font-bold leading-none drop-shadow-sm ${
+                    isActive ? "text-white" : "text-[var(--text-primary)]"
+                  }`}
                 >
                   {format(date, "dd")}
                 </span>
 
                 <span
-                  className={`type-label z-10 mt-1 text-[11px] ${isActive ? "text-orange-50" : "text-gray-500"}`}
+                  className={`type-label z-10 mt-1 text-[11px] ${
+                    isActive ? "text-orange-50" : "text-[var(--text-muted)]"
+                  }`}
                 >
                   {format(date, "EEE", { locale: ru })}
                 </span>
@@ -232,7 +239,7 @@ export const Calendar = ({
         </div>
 
         <div ref={controlsRef} className="flex shrink-0 items-center gap-2">
-          <div className="my-3 h-12 w-px bg-white/10" />
+          <div className="my-3 h-12 w-px bg-[var(--glass-border-dark)]" />
 
           <Popover
             isOpen={isPopoverOpen}
@@ -262,10 +269,10 @@ export const Calendar = ({
                   </>
                 ) : (
                   <>
-                    <div className="mb-1 rounded-xl bg-white/5 p-2 ring-1 ring-white/5 transition-colors group-hover:bg-white/10">
+                    <div className="mb-1 rounded-xl bg-[var(--glass-bg-soft)] p-2 ring-1 ring-[var(--glass-border-dark)] transition-colors group-hover:bg-[var(--glass-bg-strong)]">
                       <CalendarIcon className="h-5 w-5 opacity-60 transition-opacity group-hover:opacity-100" />
                     </div>
-                    <span className="type-meta text-[9px] tracking-[0.1em] opacity-50 transition-opacity group-hover:opacity-100">
+                    <span className="type-meta text-[9px] tracking-[0.1em] text-[var(--text-muted)] opacity-75 transition-opacity group-hover:opacity-100">
                       Даты
                     </span>
                   </>
@@ -273,10 +280,10 @@ export const Calendar = ({
               </button>
             </PopoverTrigger>
 
-            <PopoverContent className="w-auto overflow-hidden rounded-2xl border border-white/10 bg-[#18181b] p-0 shadow-2xl ring-1 ring-white/10">
-              <I18nProvider locale="ru-Ru">
+            <PopoverContent className="w-auto overflow-hidden rounded-2xl border border-[var(--glass-border-dark)] bg-[linear-gradient(155deg,var(--glass-bg-strong)_0%,var(--surface-1)_100%)] p-0 text-[var(--text-primary)] shadow-[var(--glass-shadow)] ring-1 ring-[var(--glass-border)] backdrop-blur-xl">
+              <I18nProvider locale="ru-RU">
                 <HeroCalendar
-                  className="bg-transparent p-2 text-white"
+                  className="bg-transparent p-2 text-[var(--text-primary)]"
                   minValue={today(getLocalTimeZone())}
                   value={parseDate(format(selectedDate, "yyyy-MM-dd"))}
                   onChange={(dateValue) => {
