@@ -201,15 +201,6 @@ body {
             radial-gradient(circle at 84% 86%, rgba(255, 255, 255, 0.04), transparent 46%);
     }
 
-    .cinema-card-soft {
-        border-radius: 1rem;
-        border: 1px solid var(--glass-border-dark);
-        background: linear-gradient(170deg, var(--glass-bg-soft) 0%, rgba(255, 255, 255, 0.14) 100%);
-        box-shadow: 0 12px 28px -24px rgba(8, 14, 28, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.34);
-        backdrop-filter: blur(14px) saturate(130%);
-        -webkit-backdrop-filter: blur(14px) saturate(130%);
-    }
-
     .cinema-gradient-text {
         background: linear-gradient(125deg, var(--accent), #ff8a3d 45%, #ffd16a 100%);
         -webkit-background-clip: text;

@@ -68,41 +68,36 @@ const SessionButton = ({
   return (
     <Link
       aria-label={`Сеанс ${timeLabel}, ${hall}, ${priceLabel}`}
-      className={`cinema-card-soft group/session relative flex min-w-0 flex-col rounded-lg transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)]/45 hover:shadow-[0_14px_26px_-20px_rgba(255,110,66,0.68)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/55 ${
-        compact ? "min-h-[54px] gap-0.5 p-1" : "min-h-[60px] gap-0.5 p-1.5"
-      }`}
+      className={`group/session relative flex min-w-0 flex-col rounded-lg transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)]/45 hover:shadow-[0_14px_26px_-20px_rgba(255,110,66,0.68)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/55 ${compact ? "min-h-[54px] gap-0.5 p-1" : "min-h-[60px] gap-0.5 p-1.5"
+        }`}
       title={`${timeLabel} · ${hall} · ${priceLabel}`}
       to={`/performance/${performanceId}`}
     >
       <div
-        className={`relative z-10 flex flex-col items-center justify-center overflow-hidden rounded-[8px] border border-black/15 bg-white/55 text-center transition-[border-color,background-color,box-shadow] duration-300 group-hover/session:border-[var(--accent)]/35 group-hover/session:bg-[var(--accent-soft)] group-hover/session:shadow-[0_10px_18px_-16px_rgba(255,110,66,0.65)] dark:border-white/15 dark:bg-white/[0.08] dark:group-hover/session:bg-[rgba(255,110,66,0.16)] ${
-          compact ? "h-[34px] px-1.5 py-0.5" : "h-[40px] px-2 py-1"
-        }`}
+        className={`relative z-10 flex flex-col items-center justify-center overflow-hidden rounded-[8px] border border-black/15 bg-white/55 text-center transition-[border-color,background-color,box-shadow] duration-300 group-hover/session:border-[var(--accent)]/35 group-hover/session:bg-[var(--accent-soft)] group-hover/session:shadow-[0_10px_18px_-16px_rgba(255,110,66,0.65)] dark:border-white/15 dark:bg-white/[0.08] dark:group-hover/session:bg-[rgba(255,110,66,0.16)] ${compact ? "h-[34px] px-1.5 py-0.5" : "h-[40px] px-2 py-1"
+          }`}
       >
         <span
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#ff4f1f] via-[#ff7a2f] to-[#f0a640] opacity-75 transition-opacity duration-300 group-hover/session:opacity-100"
         />
         <span
-          className={`type-numeric relative z-10 font-black leading-none tracking-[0.014em] text-[var(--text-primary)] transition-colors duration-300 group-hover/session:text-[var(--accent-strong)] dark:text-white dark:group-hover/session:text-[#ffb499] ${
-            compact ? "text-[11px]" : "text-[13px]"
-          }`}
+          className={`type-numeric relative z-10 font-black leading-none tracking-[0.014em] text-[var(--text-primary)] transition-colors duration-300 group-hover/session:text-[var(--accent-strong)] dark:text-white dark:group-hover/session:text-[#ffb499] ${compact ? "text-[11px]" : "text-[13px]"
+            }`}
         >
           {timeLabel}
         </span>
         <span
-          className={`type-numeric relative z-10 mt-0.5 whitespace-nowrap font-bold leading-none text-[var(--accent-strong)] transition-colors duration-300 group-hover/session:text-[var(--accent-strong)] dark:group-hover/session:text-[#ffb499] ${
-            compact ? "text-[8px]" : "text-[9px]"
-          }`}
+          className={`type-numeric relative z-10 mt-0.5 whitespace-nowrap font-bold leading-none text-[var(--accent-strong)] transition-colors duration-300 group-hover/session:text-[var(--accent-strong)] dark:group-hover/session:text-[#ffb499] ${compact ? "text-[8px]" : "text-[9px]"
+            }`}
         >
           {priceLabel}
         </span>
       </div>
 
       <div
-        className={`relative z-10 overflow-hidden px-0.5 text-center leading-[1.1] text-[var(--text-muted)] transition-colors duration-300 group-hover/session:text-[var(--text-primary)] dark:text-white/75 dark:group-hover/session:text-white ${
-          compact ? "text-[8px]" : "text-[9px]"
-        }`}
+        className={`relative z-10 overflow-hidden px-0.5 text-center leading-[1.1] text-[var(--text-muted)] transition-colors duration-300 group-hover/session:text-[var(--text-primary)] dark:text-white/75 dark:group-hover/session:text-white ${compact ? "text-[8px]" : "text-[9px]"
+          }`}
         style={hallTickerStyle}
         title={hall}
       >
