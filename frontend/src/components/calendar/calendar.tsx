@@ -15,12 +15,16 @@ interface CalendarProps {
   onDateChange: (date: string) => void;
   initialDate?: string | null;
   className?: string;
+  variant?: "standalone" | "embedded";
+  maxVisibleDays?: number;
 }
 
 export const Calendar = ({
   onDateChange,
   initialDate: initialDateProp,
   className,
+  variant = "standalone",
+  maxVisibleDays = 7,
 }: CalendarProps): JSX.Element => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -68,7 +72,7 @@ export const Calendar = ({
       const targetButtonWidth = isSmViewport ? 62 : 54;
       const hardMinButtonWidth = isSmViewport ? 46 : 40;
       const maxPreferredButtonWidth = isSmViewport ? 74 : 64;
-      const maxDaysCap = 21;
+      const maxDaysCap = Math.max(3, Math.min(14, maxVisibleDays));
 
       const maxDaysByHardMin = Math.max(
         3,
@@ -137,7 +141,7 @@ export const Calendar = ({
     if (controlsRef.current) observer.observe(controlsRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [maxVisibleDays]);
 
   // --- Синхронизация с URL ---
   useEffect(() => {
@@ -177,7 +181,9 @@ export const Calendar = ({
   // --- СТИЛИ ---
 
   const containerClasses =
-    "flex w-full max-w-full items-center gap-2 overflow-hidden rounded-[24px] border border-[var(--glass-border-dark)] bg-[linear-gradient(145deg,var(--glass-bg-strong),var(--glass-bg))] p-1.5 text-[var(--text-primary)] shadow-[var(--glass-shadow)] ring-1 ring-[var(--glass-border)] backdrop-blur-2xl";
+    variant === "embedded"
+      ? "flex w-full max-w-full items-center gap-2 overflow-hidden rounded-[20px] p-1 text-[var(--text-primary)]"
+      : "flex w-full max-w-full items-center gap-2 overflow-hidden rounded-[24px] border border-[var(--glass-border-dark)] bg-[linear-gradient(145deg,var(--glass-bg-strong),var(--glass-bg))] p-1.5 text-[var(--text-primary)] shadow-[var(--glass-shadow)] ring-1 ring-[var(--glass-border)] backdrop-blur-2xl";
   const btnBase =
     "relative flex h-[72px] flex-col items-center justify-center overflow-hidden rounded-[16px] transition-all duration-300 sm:h-[80px] sm:rounded-[18px]";
   const controlsBtnBase =
@@ -189,7 +195,10 @@ export const Calendar = ({
     "bg-gradient-to-br from-[#ff4f1f] via-[#ff7a2f] to-[#f0a640] animate-gradient-rich text-white shadow-[0_8px_20px_-6px_rgba(255,94,46,0.55)] ring-1 ring-white/20 scale-100";
 
   return (
-    <div ref={containerRef} className={`${className} w-full min-w-0`}>
+    <div
+      ref={containerRef}
+      className={[className, "w-full min-w-0"].filter(Boolean).join(" ")}
+    >
       <div className={containerClasses}>
         <div className="flex min-w-0 flex-1 gap-1 overflow-hidden">
           {Array.from({ length: numberOfDays }).map((_, index) => {

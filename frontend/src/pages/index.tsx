@@ -5,12 +5,10 @@ import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 
 import DefaultLayout from "@/layouts/default";
-import { Calendar } from "@/components/calendar/calendar";
 import { MovieCard } from "@/components/movies/MovieCard";
+import { ScheduleControls, type ViewMode } from "@/components/schedule/ScheduleControls";
 import { Movie } from "@/types";
 import { apiClient } from "@/utils/apiClient";
-
-type ViewMode = "grid" | "list";
 
 interface HeroSlide {
   eyebrow: string;
@@ -59,40 +57,6 @@ const getDefaultViewMode = (): ViewMode => {
 
   return window.matchMedia("(max-width: 767px)").matches ? "list" : "grid";
 };
-
-const GridViewIcon = () => (
-  <svg
-    aria-hidden
-    fill="none"
-    height="16"
-    viewBox="0 0 24 24"
-    width="16"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 14H20V20H14V14Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const ListViewIcon = () => (
-  <svg
-    aria-hidden
-    fill="none"
-    height="16"
-    viewBox="0 0 24 24"
-    width="16"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M4 6H20M4 12H20M4 18H20"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeWidth="2"
-    />
-  </svg>
-);
 
 export default function IndexPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -267,11 +231,10 @@ export default function IndexPage() {
               return (
                 <button
                   key={slide.title}
-                  className={`type-meta rounded-full px-3 py-1.5 text-[10px] tracking-[0.11em] transition-colors ${
-                    isActive
-                      ? "bg-white text-black"
-                      : "bg-white/15 text-white/85 hover:bg-white/25"
-                  }`}
+                  className={`type-meta rounded-full px-3 py-1.5 text-[10px] tracking-[0.11em] transition-colors ${isActive
+                    ? "bg-white text-black"
+                    : "bg-white/15 text-white/85 hover:bg-white/25"
+                    }`}
                   type="button"
                   onClick={() => setActiveSlide(index)}
                 >
@@ -282,77 +245,15 @@ export default function IndexPage() {
           </div>
         </section>
 
-        <section className="grid gap-4 lg:grid-cols-2 lg:items-stretch">
-          <div className="glass-panel h-full min-w-0 overflow-hidden rounded-3xl p-3 md:p-4">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="type-eyebrow text-[var(--text-muted)]">
-                  Фильтр по жанрам
-                </p>
-              </div>
-
-              <div className="inline-grid grid-cols-2 rounded-2xl border border-black/10 bg-white/70 p-1 dark:border-white/10 dark:bg-white/[0.04]">
-                <button
-                  className={`type-label flex items-center gap-2 rounded-xl px-3 py-2 transition-colors ${
-                    viewMode === "grid"
-                      ? "bg-[var(--accent)] text-white"
-                      : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-                  }`}
-                  type="button"
-                  onClick={() => handleViewModeChange("grid")}
-                >
-                  <GridViewIcon />
-                  Постеры
-                </button>
-                <button
-                  className={`type-label flex items-center gap-2 rounded-xl px-3 py-2 transition-colors ${
-                    viewMode === "list"
-                      ? "bg-[var(--accent)] text-white"
-                      : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-                  }`}
-                  type="button"
-                  onClick={() => handleViewModeChange("list")}
-                >
-                  <ListViewIcon />
-                  Список
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-3 w-full max-w-full overflow-x-auto pb-1 scrollbar-hide">
-              <div className="inline-flex min-w-max flex-nowrap gap-2 pr-2">
-                {genres.map((genre) => {
-                  const isActive = selectedGenre === genre;
-
-                  return (
-                    <Button
-                      key={genre}
-                      className={`type-label shrink-0 whitespace-nowrap ${
-                        isActive
-                          ? "bg-black text-white dark:bg-white dark:text-black"
-                          : "text-[var(--text-muted)]"
-                      }`}
-                      radius="full"
-                      size="sm"
-                      variant={isActive ? "solid" : "flat"}
-                      onPress={() => setSelectedGenre(genre)}
-                    >
-                      {genre}
-                    </Button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          <div className="min-w-0 lg:h-full">
-            <Calendar
-              className="glass-panel h-full rounded-3xl p-2 lg:flex lg:items-center"
-              initialDate={date}
-              onDateChange={setDate}
-            />
-          </div>
-        </section>
+        <ScheduleControls
+          date={date}
+          genres={genres}
+          selectedGenre={selectedGenre}
+          viewMode={viewMode}
+          onDateChange={setDate}
+          onGenreChange={setSelectedGenre}
+          onViewModeChange={handleViewModeChange}
+        />
 
         {loading ? (
           <div className="flex h-[45vh] items-center justify-center">
@@ -364,11 +265,18 @@ export default function IndexPage() {
               {error}
             </p>
           </div>
+        ) : movies.length === 0 ? (
+          <div className="rounded-3xl border border-dashed border-black/15 bg-white/50 px-5 py-16 text-center dark:border-white/15 dark:bg-white/[0.02]">
+            <p className="type-section">На выбранную дату фильмов нет</p>
+            <p className="type-body pt-2 text-[var(--text-muted)]">
+              Попробуйте выбрать другую дату в календаре.
+            </p>
+          </div>
         ) : filteredMovies.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-black/15 bg-white/50 px-5 py-16 text-center dark:border-white/15 dark:bg-white/[0.02]">
             <p className="type-section">Нет фильмов по выбранному жанру</p>
             <p className="type-body pt-2 text-[var(--text-muted)]">
-              Попробуйте другую дату или выберите другой жанр.
+              Выберите другой жанр или верните «Все».
             </p>
           </div>
         ) : (
